@@ -19,11 +19,11 @@ public class LocalProcessor {
     private long period = 10_000_000_000_000L;
     private StringBuilder processorVersion;
     private int valueOfCheap;
-    Scanner informationScanner;
+    private Scanner informationScanner;
     private List<String> stringArrayList = new LinkedList<>();
 
 
-    public LocalProcessor(StringBuilder processorName, Long period, StringBuilder processorVersion, Integer valueOfCheap,
+    public LocalProcessor(StringBuilder processorName, long period, StringBuilder processorVersion, int valueOfCheap,
                           Scanner informationScanner, List<String> stringArrayList) {
         this.processorName = processorName;
         this.period = period;
@@ -39,8 +39,8 @@ public class LocalProcessor {
     @ListIteratorAnnotation
     public void listIterator(List<String> stringList) {
         stringArrayList = new LinkedList<>(stringList);
-        for (int i = 0; i < period; i++) {
-            System.out.println(stringArrayList.get(i).hashCode());
+        for (String s : stringArrayList) {
+            System.out.println(s.hashCode());
         }
     }
 
