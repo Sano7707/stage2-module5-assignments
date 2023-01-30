@@ -2,6 +2,7 @@ package assignments;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,7 +41,12 @@ public class LocalProcessor {
     public void listIterator(List<String> stringList) {
         stringArrayList = new LinkedList<>(stringList);
         for (String s : stringArrayList) {
-            System.out.println(s.hashCode());
+            try {
+                System.out.println(s.hashCode());
+            }
+            catch (Exception exception){
+                exception.printStackTrace();
+            }
         }
     }
 
@@ -66,4 +72,5 @@ public class LocalProcessor {
             informationScanner.close();
         }
     }
+
 }
