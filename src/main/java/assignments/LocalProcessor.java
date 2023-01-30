@@ -15,15 +15,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LocalProcessor {
-    private String processorName;
+    private StringBuilder processorName;
     private long period = 10_000_000_000_000L;
-    private String processorVersion;
+    private StringBuilder processorVersion;
     private int valueOfCheap;
     Scanner informationScanner;
     private List<String> stringArrayList = new LinkedList<>();
 
 
-    public LocalProcessor(String processorName, Long period, String processorVersion, Integer valueOfCheap,
+    public LocalProcessor(StringBuilder processorName, Long period, StringBuilder processorVersion, Integer valueOfCheap,
                           Scanner informationScanner, List<String> stringArrayList) {
         this.processorName = processorName;
         this.period = period;
@@ -45,21 +45,25 @@ public class LocalProcessor {
     }
 
     @FullNameProcessorGeneratorAnnotation
-    public String fullNameProcessorGenerator(List<String> stringList) {
-        StringBuilder buffer = new StringBuilder(processorName);
+    public StringBuilder fullNameProcessorGenerator(List<String> stringList) {
         for (String s: stringArrayList) {
-            buffer.append(s);
+            processorName.append(s);
         }
-        return buffer.toString();
+        return processorName;
     }
 
     @ReadFullProcessorNameAnnotation
-    public void readFullProcessorName(File file) throws FileNotFoundException {
+    public void readFullProcessorName(File file){
+        try {
             informationScanner = new Scanner(file);
-            StringBuilder s = new StringBuilder(processorVersion);
             while (informationScanner.hasNext()) {
-                s.append(informationScanner.nextLine());
+                processorVersion.append(informationScanner.nextLine());
             }
-            processorName = s.toString();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            informationScanner.close();
+        }
     }
 }
